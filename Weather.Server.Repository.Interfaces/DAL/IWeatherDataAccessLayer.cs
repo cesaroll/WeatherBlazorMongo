@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Weather.Server.Repository.Interfaces.DAL
 {
-    interface IWeatherDataAccessLayer
+    public interface IWeatherDataAccessLayer
     {
         /// <summary>
         /// Retrieve a Collection of Weather
