@@ -17,6 +17,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Weather.Client\Weather.Client.csproj" />
+    <ProjectReference Include="..\Weather.Server.Repository.Interfaces\Weather.Server.Repository.Interfaces.csproj" />
+    <ProjectReference Include="..\Weather.Server.Repository.Model\Weather.Server.Repository.Model.csproj" />
     <ProjectReference Include="..\Weather.Shared\Weather.Shared.csproj" />
   </ItemGroup>
 
