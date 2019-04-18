@@ -10,10 +10,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="DAL\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="MongoDb.Driver" Version="2.8.0" />
   </ItemGroup>
 

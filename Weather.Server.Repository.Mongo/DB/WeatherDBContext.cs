@@ -17,6 +17,11 @@ namespace Weather.Server.Repository.Mongo.DB
 
         public IMongoCollection<Model.Weather> WeatherCollection => MongoDatabase.GetCollection<Model.Weather>("WeatherRecord");
 
-        
+
+        public static WeatherDBContext GetInstance()
+        {
+            return new WeatherDBContext(new MongoClient("mongodb+srv://cesarl:STart123@clusterces-s5jn4.mongodb.net/test?retryWrites=true"));
+        }
+
     }
 }
