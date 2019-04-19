@@ -54,7 +54,8 @@ namespace Weather.Server.Repository.Mongo.DAL
             {
                 var weather = mapper.Map<WeatherForecast, Model.Weather>(weatherForecast);
 
-                DBCtx.WeatherCollection.InsertOne(weather);
+                DBCtx.WeatherCollection.InsertOneAsync(weather).Wait();
+
             }
             catch 
             {
@@ -85,7 +86,8 @@ namespace Weather.Server.Repository.Mongo.DAL
             try
             {
                 var weather = mapper.Map<WeatherForecast, Model.Weather>(weatherForecast);
-                DBCtx.WeatherCollection.ReplaceOne(x => x.Date == weather.Date, weather);
+                //DBCtx.WeatherCollection.ReplaceOne(x => x.Date == weather.Date, weather);
+                DBCtx.WeatherCollection.ReplaceOneAsync(x => x.Date == weather.Date, weather).Wait();
             }
             catch 
             {
@@ -98,7 +100,8 @@ namespace Weather.Server.Repository.Mongo.DAL
         {
             try
             {
-                DBCtx.WeatherCollection.DeleteOne(x => x.Date == date);
+                //DBCtx.WeatherCollection.DeleteOne(x => x.Date == date);
+                DBCtx.WeatherCollection.DeleteOneAsync(x => x.Date == date).Wait();
             }
             catch 
             {
