@@ -1,41 +1,42 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Weather.Shared;
 
 namespace Weather.Server.Repository.Interfaces.DAL
 {
     public interface IWeatherDataAccessLayer
     {
         /// <summary>
-        /// Retrieve a Collection of Weather
+        /// Retrieve a Collection of WeatherForeCast
         /// </summary>
         /// <returns></returns>
-        List<Model.Weather> GetAllWeathers();
+        List<WeatherForecast> GetAllWeathers();
 
         /// <summary>
-        /// Add Weather
+        /// Add WeatherForecast
         /// </summary>
         /// <param name="weather"></param>
-        void AddWeather(Model.Weather weather);
+        void AddWeather(WeatherForecast weatherForecast);
 
         /// <summary>
-        /// Get Weather
+        /// Get WeatherForecast
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        Model.Weather GetWeather(DateTime id);
+        WeatherForecast GetWeather(DateTime date);
 
         /// <summary>
-        /// Update Weather
+        /// Update WeatherForecast
         /// </summary>
         /// <param name="weather"></param>
-        void UpdateWeather(Model.Weather weather);
+        void UpdateWeather(WeatherForecast weatherForecast);
 
         /// <summary>
-        /// Delete Weather
+        /// Delete WeatherForecast
         /// </summary>
         /// <param name="id"></param>
-        void DeleteWeather(DateTime id);
+        void DeleteWeather(DateTime date);
 
 
     }

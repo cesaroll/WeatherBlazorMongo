@@ -19,6 +19,7 @@
     <ProjectReference Include="..\Weather.Client\Weather.Client.csproj" />
     <ProjectReference Include="..\Weather.Server.Repository.Interfaces\Weather.Server.Repository.Interfaces.csproj" />
     <ProjectReference Include="..\Weather.Server.Repository.Model\Weather.Server.Repository.Model.csproj" />
+    <ProjectReference Include="..\Weather.Server.Repository.Mongo\Weather.Server.Repository.Mongo.csproj" />
     <ProjectReference Include="..\Weather.Shared\Weather.Shared.csproj" />
   </ItemGroup>
 

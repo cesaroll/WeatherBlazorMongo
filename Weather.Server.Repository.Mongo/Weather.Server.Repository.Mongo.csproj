@@ -7,9 +7,11 @@
   <ItemGroup>
     <ProjectReference Include="..\Weather.Server.Repository.Interfaces\Weather.Server.Repository.Interfaces.csproj" />
     <ProjectReference Include="..\Weather.Server.Repository.Model\Weather.Server.Repository.Model.csproj" />
+    <ProjectReference Include="..\Weather.Shared\Weather.Shared.csproj" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="8.0.0" />
     <PackageReference Include="MongoDb.Driver" Version="2.8.0" />
   </ItemGroup>
 

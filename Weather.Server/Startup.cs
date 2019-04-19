@@ -5,6 +5,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json.Serialization;
 using System.Linq;
+using Weather.Server.Repository.Interfaces.DAL;
+using Weather.Server.Repository.Mongo.DAL;
 
 namespace Weather.Server
 {
@@ -39,6 +41,8 @@ namespace Weather.Server
             });
 
             app.UseBlazor<Client.Startup>();
+
+            
         }
     }
 }

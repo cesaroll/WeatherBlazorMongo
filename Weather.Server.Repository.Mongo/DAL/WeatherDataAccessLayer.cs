@@ -3,24 +3,28 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Runtime.InteropServices.ComTypes;
 using System.Text;
+using AutoMapper;
 using Weather.Server.Repository.Interfaces.DAL;
 using Weather.Server.Repository.Mongo.DB;
 using MongoDB.Driver;
+using Weather.Shared;
 
 namespace Weather.Server.Repository.Mongo.DAL
 {
-    class WeatherDataAccessLayer : IWeatherDataAccessLayer
+    public class WeatherDataAccessLayer : IWeatherDataAccessLayer
     {
         private WeatherDBContext DBCtx { get; }
+        private readonly IMapper mapper;
 
-        public WeatherDataAccessLayer(WeatherDBContext context)
+        public WeatherDataAccessLayer(WeatherDBContext context, IMapper mapper)
         {
             DBCtx = context;
+            this.mapper = mapper;
         }
 
         #region Public Properties
 
-        public List<Model.Weather> GetAllWeathers()
+        public List<WeatherForecast> GetAllWeathers()
         {
             try
             {
@@ -30,7 +34,11 @@ namespace Weather.Server.Repository.Mongo.DAL
                 var listTask = cursorTask.Result.ToListAsync();
                 listTask.Wait();
 
-                return listTask.Result;
+                var weathers = listTask.Result;
+
+                var list = mapper.Map<List<Model.Weather>, List<WeatherForecast>>(weathers);
+
+                return list;
 
             }
             catch
@@ -40,10 +48,12 @@ namespace Weather.Server.Repository.Mongo.DAL
             }
         }
 
-        public void AddWeather(Model.Weather weather)
+        public void AddWeather(WeatherForecast weatherForecast)
         {
             try
             {
+                var weather = mapper.Map<WeatherForecast, Model.Weather>(weatherForecast);
+
                 DBCtx.WeatherCollection.InsertOne(weather);
             }
             catch 
@@ -52,14 +62,16 @@ namespace Weather.Server.Repository.Mongo.DAL
             }
         }
 
-        public Model.Weather GetWeather(DateTime id)
+        public WeatherForecast GetWeather(DateTime date)
         {
             try
             {
-                var cursorTask = DBCtx.WeatherCollection.FindAsync(x => x.DateTime == id);
+                var cursorTask = DBCtx.WeatherCollection.FindAsync(x => x.Date == date);
                 cursorTask.Wait();
 
-                return cursorTask.Result.FirstOrDefault();
+                var weather = cursorTask.Result.FirstOrDefault();
+
+                return mapper.Map<Model.Weather, WeatherForecast>(weather);
             }
             catch
             {
@@ -68,11 +80,12 @@ namespace Weather.Server.Repository.Mongo.DAL
             }
         }
 
-        public void UpdateWeather(Model.Weather weather)
+        public void UpdateWeather(WeatherForecast weatherForecast)
         {
             try
             {
-                DBCtx.WeatherCollection.ReplaceOne(x => x.DateTime == weather.DateTime, weather);
+                var weather = mapper.Map<WeatherForecast, Model.Weather>(weatherForecast);
+                DBCtx.WeatherCollection.ReplaceOne(x => x.Date == weather.Date, weather);
             }
             catch 
             {
@@ -81,11 +94,11 @@ namespace Weather.Server.Repository.Mongo.DAL
             }
         }
 
-        public void DeleteWeather(DateTime id)
+        public void DeleteWeather(DateTime date)
         {
             try
             {
-                DBCtx.WeatherCollection.DeleteOne(x => x.DateTime == id);
+                DBCtx.WeatherCollection.DeleteOne(x => x.Date == date);
             }
             catch 
             {
@@ -99,7 +112,7 @@ namespace Weather.Server.Repository.Mongo.DAL
 
         public static IWeatherDataAccessLayer GetInstance()
         {
-            return new WeatherDataAccessLayer(WeatherDBContext.GetInstance());
+            return new WeatherDataAccessLayer(WeatherDBContext.GetInstance(), AutomapperConfiguration.Configure().CreateMapper());
         }
 
         #endregion
